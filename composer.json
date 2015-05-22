@@ -28,5 +28,11 @@
         "phpdocumentor/phpdocumentor": "dev-master",
         "phing/phing": "2.*",
         "squizlabs/php_codesniffer": "@stable"
+    },
+
+    "autoload": {
+        "psr-0" : {
+            "QUI" : "src/"
+        }
     }
 }
