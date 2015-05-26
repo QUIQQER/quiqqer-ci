@@ -2,7 +2,7 @@
     "name" : "quiqqer/quiqqer-ci",
     "type" : "quiqqer-system",
     "description" : "QUIQQER Continuous Integration - Generated Docs for Modules and Packages",
-    "version" : "dev-master",
+    "version" : "dev-dev",
     "license" : "GPL-3.0+",
 
     "authors" : [{
