@@ -19,14 +19,14 @@ class PhpDox extends QUI\Ci\Build
      *
      * @param QUI\Ci\Project|Bool $Project - (optional) only needed for build and xml generation
      */
-    public function __construct($Project=false)
+    public function __construct($Project = false)
     {
         parent::__construct($Project);
 
         $this->setAttributes(array(
             'name'        => 'phpdox',
             'description' => 'Generate project documentation using phpDox',
-            'depend'      => array('phploc-ci', 'phpcs-ci')
+            'depends'     => array('phploc-ci', 'phpcs-ci', 'phpmd', 'phpunit')
         ));
     }
 
@@ -35,11 +35,18 @@ class PhpDox extends QUI\Ci\Build
      */
     public function build()
     {
+        if (!$this->_Project) {
+            throw new QUI\Exception('No Project given. Could not build phpdox.xml');
+        }
+
+        $path = $this->_Project->getPath();
+        $name = $this->_Project->getName();
+
         $phpdoxXml
             = '
 <phpdox xmlns="http://xml.phpdox.net/config">
 
-  <project name="QUIQQER Utils - quiqqer/utils" source="${basedir}/projects/qutils/lib" workdir="${basedir}/build/api/xml">
+  <project name="'.$name.'" source="'.$path.'project/lib" workdir="${basedir}/build/api/xml">
 
     <collector backend="parser" />
     <generator output="${basedir}/build/docs">
@@ -89,7 +96,7 @@ class PhpDox extends QUI\Ci\Build
         return '
         <target name="phpdox"
             unless="phpdox.done"
-            depends="phploc-ci,phpcs-ci"
+            depends="phploc-ci,phpcs-ci,phpmd,phpunit"
             description="'.$this->getAttribute('description').'"
         >
             <delete dir="${builddir}/docs" />

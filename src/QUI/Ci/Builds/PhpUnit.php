@@ -34,11 +34,13 @@ class PhpUnit extends QUI\Ci\Build
      */
     public function getXML()
     {
-        return '
-        <target name="'.$this->getAttribute('name').'" description="'
-        .$this->getAttribute('name').'">
-            <delete dir="${builddir}/coverage" />
-            <mkdir dir="${builddir}/coverage" />
+        return '<target
+            name="'.$this->getAttribute('name').'"
+            description="'.$this->getAttribute('name').'"
+
+        >
+            <delete dir="${builddir}/logs/coverage" />
+            <mkdir dir="${builddir}/logs/coverage" />
 
             <exec command="${toolsdir}/phpunit --bootstrap ${testdir}/bootstrap.php --coverage-html ${builddir}/coverage --coverage-xml ${builddir}/logs/coveragexml ${testdir}" />
         </target>';

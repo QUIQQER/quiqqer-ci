@@ -60,6 +60,26 @@ class Project
 
         $this->_Settings = QUI\Utils\XML::getDomFromXml($this->_settingFile);
         $this->_builds = $this->_getBuildsBySettings();
+        $this->_name = $name;
+
+        if (file_exists($this->getPath().'project/composer.json')) {
+            $composerJson = json_decode(
+                file_get_contents($this->getPath().'project/composer.json'),
+                true
+            );
+
+            $this->_name = $composerJson['name'];
+        }
+    }
+
+    /**
+     * Return the project name
+     *
+     * @return String
+     */
+    public function getName()
+    {
+        return $this->_name;
     }
 
     /**
@@ -87,8 +107,8 @@ class Project
         $xml .= '</quiqqer-ci>';
 
         $Dom = new \DOMDocument('1.0');
-        $Dom->loadXML($xml);
         $Dom->preserveWhiteSpace = false;
+        $Dom->loadXML($xml);
         $Dom->formatOutput = true;
 
         file_put_contents($this->_settingFile, $Dom->saveXML());

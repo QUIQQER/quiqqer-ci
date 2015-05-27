@@ -25,8 +25,7 @@ class PhpCs extends QUI\Ci\Build
             'name'        => 'phpcs',
             'description' =>
                 'Find coding standard violations and print human readable output.'
-                .
-                'Intended for usage on the command line before committing.'
+                .'Intended for usage on the command line before committing.'
         ));
     }
 

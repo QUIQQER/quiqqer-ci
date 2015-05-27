@@ -26,7 +26,7 @@ class PhpCsCi extends QUI\Ci\Build
             'description' =>
                 'Find coding standard violations using PHP_CodeSniffer and print human readable output. '
                 .'Intended for usage on the command line before committing.',
-            'depends' => array('prepare')
+            'depends'     => array('prepare')
         ));
     }
 

@@ -39,7 +39,8 @@ class PhpCpd extends QUI\Ci\Build
         return '
         <target name="'.$this->getAttribute('name').'"
                 unless="phpcpd.done"
-                description="'. $this->getAttribute('name') .'">
+                description="'.$this->getAttribute('name').'"
+        >
             <exec executable="${toolsdir}/phpcpd">
                 <arg path="${srcdir}" />
             </exec>

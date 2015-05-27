@@ -26,7 +26,7 @@ class PhpCpdCi extends QUI\Ci\Build
             'description' =>
                 'Find duplicate code using PHPCPD and log result in XML format. '
                 .'Intended for usage within a continuous integration environment.',
-            'depends' => array('prepare')
+            'depends'     => array('prepare')
         ));
     }
 
@@ -41,7 +41,7 @@ class PhpCpdCi extends QUI\Ci\Build
         <target name="'.$this->getAttribute('name').'"
             unless="phpcpd.done"
             depends="prepare"
-            description="'. $this->getAttribute('name') .'"
+            description="'.$this->getAttribute('name').'"
         >
             <exec command="${toolsdir}/phpcpd --log-pmd ${builddir}/logs/pmd-cpd.xml ${srcdir}"
                   passthru="true"

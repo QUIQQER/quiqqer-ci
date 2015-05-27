@@ -27,8 +27,7 @@
         "theseer/phpdox": "@stable",
         "phpdocumentor/phpdocumentor": "dev-master",
         "phing/phing": "2.*",
-        "squizlabs/php_codesniffer": "@stable",
-        "wp-cli/php-cli-tools":  "@stable"
+        "squizlabs/php_codesniffer": "@stable"
     },
 
     "autoload": {
