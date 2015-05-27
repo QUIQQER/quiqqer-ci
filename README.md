@@ -24,12 +24,16 @@ Features
 Installation
 ------------
 
-Bevor Sie das Paket installieren müssen folgende Vorraussetzunge gegeben sein:
+Bevor Sie das Paket installieren müssen folgende Voraussetzungen gegeben sein:
+
+Voraussetzungen:
 
 - php5-xsl 
 - php5-xdebug 
 - graphviz 
 - php5-intl
+- system() shell_exec() muss erlaubt sein
+- git
 
 Installation via APT (Ubuntu/Debian):
 
