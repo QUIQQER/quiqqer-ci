@@ -3,7 +3,8 @@
     clear: both;
 }
 
-.quiqqerci-build {
+.quiqqerci-build,
+.quiqqerci-build-readme {
     float: left;
     line-height: 20px;
     margin-top: 20px;
@@ -12,10 +13,23 @@
     width: 300px;
 }
 
+.quiqqerci-build-readme {
+    width: 100%;
+}
+
+    .quiqqerci-build-readme pre {
+        clear: both;
+        float: left;
+        height: 300px;
+        width: 100%;
+    }
+
 .quiqqerci-build-icon {
     float: left;
     font-size: 50px !important;
     margin-right: 10px;
+    text-align: center;
+    width: 50px;
 }
 
 .quiqqerci-build-title {

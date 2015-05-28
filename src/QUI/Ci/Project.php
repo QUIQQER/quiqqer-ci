@@ -115,6 +115,30 @@ class Project extends QUI\QDOM
     }
 
     /**
+     * Return the Readme
+     *
+     * @return string
+     */
+    public function getReadme()
+    {
+        $projectPath = $this->getPath().'project/';
+
+        $files = array('README.md', 'README.txt', 'README');
+
+        foreach ($files as $file) {
+            if (file_exists($projectPath.$file)) {
+                return file_get_contents($projectPath.$file);
+            }
+
+            if (file_exists($projectPath.mb_strtolower($file))) {
+                return file_get_contents($projectPath.mb_strtolower($file));
+            }
+        }
+
+        return '';
+    }
+
+    /**
      * Return the project builds
      *
      * @return Array

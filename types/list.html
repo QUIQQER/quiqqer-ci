@@ -32,6 +32,25 @@
 
         <div class="quiqqerci-project">
             {assign var=builds value=$CIProject->getBuilds()}
+            {assign var=readme value=$CIProject->getReadme()}
+
+            {if $readme}
+            <!-- README -->
+            <div href="{$builds['phpdox']->getLink()}" class="quiqqerci-build-readme"
+                data-qui="package/quiqqer/quiqqer-ci/bin/controls/BuildReadme"
+            >
+                <span class="quiqqerci-build-icon fa fa-info"></span>
+                <span class="quiqqerci-build-title">
+                    README
+                </span>
+                <br />
+                <small class="quiqqerci-build-description">
+                    Show the README File
+                </small>
+
+                <pre style="display: none"><code class="markdown">{$readme}</code></pre>
+            </div>
+            {/if}
 
             {if isset($builds['phpdox'])}
             <!-- Documentation -->
@@ -40,6 +59,7 @@
                 <span class="quiqqerci-build-title">
                     {$builds['phpdox']->getTitle()}
                 </span>
+                <br />
                 <small class="quiqqerci-build-description">
                     {$builds['phpdox']->getDescription()}
                 </small>
