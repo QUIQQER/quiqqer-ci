@@ -15,7 +15,7 @@ Features
 
 - Documentationsgenerierung (phpdox)
 - Continuous Integration
-- PHPUnit Intekration
+- PHPUnit
 - Copy/Paste Detector
 - Static code analysis (PHPDepend)
 - Code Metriken
@@ -43,8 +43,8 @@ sudo apt-get install php5-xsl php5-xdebug graphviz php5-intl libpcre3-dev php-pe
 
 Der Paketname ist: quiqqer/quiqqer-ci
 
-*Hint*
-If Xdebug is not available on the CLI, though, it currently needs to be installed via PECL. :-/
+*Hinweis*
+Wenn Xdebug auf der CLI nicht verfügbar ist, dann muss dies via PECL werden. :-/
 
 ```bash
 sudo apt-get install php5-dev
