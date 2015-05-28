@@ -25,9 +25,24 @@ class PhpDox extends QUI\Ci\Build
 
         $this->setAttributes(array(
             'name'        => 'phpdox',
+            'title'       => 'PHP Class Documentation',
             'description' => 'Generate project documentation using phpDox',
             'depends'     => array('phploc-ci', 'phpcs-ci', 'phpmd', 'phpunit')
         ));
+    }
+
+    /**
+     * Return the documentation link
+     *
+     * @return String|Bool
+     */
+    public function getLink()
+    {
+        if (!$this->_Project) {
+            return '';
+        }
+
+        return $this->_Project->getUrlPath().'build/bin/docs';
     }
 
     /**
@@ -49,7 +64,7 @@ class PhpDox extends QUI\Ci\Build
   <project name="'.$name.'" source="'.$path.'project/lib" workdir="${basedir}/build/api/xml">
 
     <collector backend="parser" />
-    <generator output="${basedir}/build/docs">
+    <generator output="${basedir}/build/bin/docs">
 
       <build engine="html" output="" />
 

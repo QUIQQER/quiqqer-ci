@@ -12,7 +12,7 @@ use QUI;
  *
  * @package QUI\Ci
  */
-class Project
+class Project extends QUI\QDOM
 {
     /**
      * @var Array
@@ -60,7 +60,7 @@ class Project
 
         $this->_Settings = QUI\Utils\XML::getDomFromXml($this->_settingFile);
         $this->_builds = $this->_getBuildsBySettings();
-        $this->_name = $name;
+        $this->setAttribute('name', $name);
 
         if (file_exists($this->getPath().'project/composer.json')) {
             $composerJson = json_decode(
@@ -68,7 +68,9 @@ class Project
                 true
             );
 
-            $this->_name = $composerJson['name'];
+            $this->setAttribute('composer', $composerJson);
+            $this->setAttribute('name', $composerJson['name']);
+            $this->setAttribute('description', $composerJson['description']);
         }
     }
 
@@ -79,7 +81,17 @@ class Project
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->getAttribute('name');
+    }
+
+    /**
+     * Return the project description
+     *
+     * @return String
+     */
+    public function getDescription()
+    {
+        return $this->getAttribute('description');
     }
 
     /**
@@ -92,6 +104,38 @@ class Project
         return $this->_path;
     }
 
+    /**
+     * Return the project path
+     *
+     * @return String
+     */
+    public function getUrlPath()
+    {
+        return str_replace(USR_DIR, URL_USR_DIR, $this->getPath());
+    }
+
+    /**
+     * Return the project builds
+     *
+     * @return Array
+     */
+    public function getBuilds()
+    {
+        $result = array();
+        $builds = Coordinator::getAvailableBuilds();
+
+        foreach ($this->_builds as $build) {
+            if (!isset($builds[$build])) {
+                continue;
+            }
+
+            $builds[$build]->setProject($this);
+
+            $result[$build] = $builds[$build];
+        }
+
+        return $result;
+    }
 
     /**
      * create setting xml files

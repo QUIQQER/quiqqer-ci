@@ -1,0 +1,65 @@
+
+{if $Template->getAttribute('content-header')}
+<section class="content-header grid-100 mobile-grid-100">
+    <header>
+        <h1>{$Site->getAttribute('title')}</h1>
+    </header>
+
+    {if $Site->getAttribute('short')}
+    <div class="content-short">
+        {$Site->getAttribute('short')}
+    </div>
+    {/if}
+</section>
+{/if}
+
+{if $Template->getAttribute('content-body') && $Site->getAttribute('content')}
+<section class="content-body grid-100 mobile-grid-100">
+    {$Site->getAttribute('content')}
+</section>
+{/if}
+
+<section>
+    {foreach $ciProjectlist as $CIProject}
+    <div>
+        <header>
+            <h2>{$CIProject->getName()}</h2>
+            <div class="content-short">
+                {$CIProject->getDescription()}
+            </div>
+
+        </header>
+
+        <div class="quiqqerci-project">
+            {assign var=builds value=$CIProject->getBuilds()}
+
+            {if isset($builds['phpdox'])}
+            <!-- Documentation -->
+            <a href="{$builds['phpdox']->getLink()}" target="_blank" class="quiqqerci-build">
+                <span class="quiqqerci-build-icon fa fa-file-code-o"></span>
+                <span class="quiqqerci-build-title">
+                    {$builds['phpdox']->getTitle()}
+                </span>
+                <small class="quiqqerci-build-description">
+                    {$builds['phpdox']->getDescription()}
+                </small>
+            </a>
+            {/if}
+
+            {if isset($builds['phpunit'])}
+            <!-- Documentation -->
+            <a href="{$builds['phpunit']->getLink()}" target="_blank" class="quiqqerci-build">
+                <span class="quiqqerci-build-icon fa fa-file-text"></span>
+                <span class="quiqqerci-build-title">
+                    {$builds['phpunit']->getTitle()}
+                </span><br />
+                <small class="quiqqerci-build-description">
+                    {$builds['phpunit']->getDescription()}
+                </small>
+            </a>
+            {/if}
+
+        </div>
+    </div>
+    {/foreach}
+</section>

@@ -38,11 +38,21 @@ Voraussetzungen:
 Installation via APT (Ubuntu/Debian):
 
 ```bash
-sudo apt-get install php5-xsl php5-xdebug graphviz php5-intl
+sudo apt-get install php5-xsl php5-xdebug graphviz php5-intl libpcre3-dev php-pear
 ```
 
 Der Paketname ist: quiqqer/quiqqer-ci
 
+*Hint*
+If Xdebug is not available on the CLI, though, it currently needs to be installed via PECL. :-/
+
+```bash
+sudo apt-get install php5-dev
+sudo pecl install xdebug
+
+sudo ln -s /etc/php5/mods-available/xdebug.ini /etc/php5/apache2/conf.d/20-xdebug.ini
+sudo ln -s /etc/php5/mods-available/xdebug.ini /etc/php5/cli/conf.d/20-xdebug.ini
+```
 
 Mitwirken
 ----------

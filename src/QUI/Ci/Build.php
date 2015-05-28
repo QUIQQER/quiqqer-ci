@@ -19,12 +19,14 @@ abstract class Build extends QUI\QDOM
      *
      * @param QUI\Ci\Project|Bool $Project - (optional) only needed for build and xml generation
      */
-    public function __construct($Project=false)
+    public function __construct($Project = false)
     {
         $this->_Project = $Project;
     }
 
     /**
+     * Return the build name
+     *
      * @return String|Bool
      */
     public function getName()
@@ -33,11 +35,33 @@ abstract class Build extends QUI\QDOM
     }
 
     /**
+     * Return the build title
+     *
+     * @return String|Bool
+     */
+    public function getTitle()
+    {
+        return $this->getAttribute('title');
+    }
+
+    /**
+     * Return the build description
+     *
      * @return String|Bool
      */
     public function getDescription()
     {
         return $this->getAttribute('description');
+    }
+
+    /**
+     * Return the build link
+     *
+     * @return String|Bool
+     */
+    public function getLink()
+    {
+        return '';
     }
 
     /**

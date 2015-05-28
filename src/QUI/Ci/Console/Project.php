@@ -220,11 +220,11 @@ class Project extends QUI\System\Console\Tool
             unless="clean.done"
             description="Cleanup build artifacts"
     >
-        <delete dir="${builddir}/logs/coverage"/>
         <delete dir="${builddir}/cache"/>
         <delete dir="${builddir}/logs"/>
         <delete dir="${builddir}/api"/>
-        <delete dir="${builddir}/docs"/>
+        <delete dir="${builddir}/bin/docs"/>
+        <delete dir="${builddir}/bin/coverage"/>
 
         <property name="clean.done" value="true"/>
     </target>
@@ -234,11 +234,11 @@ class Project extends QUI\System\Console\Tool
             depends="clean"
             description="Prepare for build"
     >
-        <mkdir dir="${builddir}/logs/coverage"/>
         <mkdir dir="${builddir}/cache"/>
         <mkdir dir="${builddir}/logs"/>
         <mkdir dir="${builddir}/api"/>
-        <mkdir dir="${builddir}/docs"/>
+        <mkdir dir="${builddir}/bin/docs"/>
+        <mkdir dir="${builddir}/bin/coverage"/>
 
         <property name="prepare.done" value="true"/>
     </target>

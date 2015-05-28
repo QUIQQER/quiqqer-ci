@@ -23,8 +23,23 @@ class PhpUnit extends QUI\Ci\Build
     {
         $this->setAttributes(array(
             'name'        => 'phpunit',
-            'description' => 'Run test suite'
+            'title'       => 'Code coverage',
+            'description' => 'Run test suite and generate the Code coverage'
         ));
+    }
+
+    /**
+     * Return the documentation link
+     *
+     * @return String|Bool
+     */
+    public function getLink()
+    {
+        if (!$this->_Project) {
+            return '';
+        }
+
+        return $this->_Project->getUrlPath().'build/bin/coverage';
     }
 
     /**
@@ -41,8 +56,9 @@ class PhpUnit extends QUI\Ci\Build
         >
             <delete dir="${builddir}/logs/coverage" />
             <mkdir dir="${builddir}/logs/coverage" />
-
-            <exec command="${toolsdir}/phpunit --bootstrap ${testdir}/bootstrap.php --coverage-html ${builddir}/coverage --coverage-xml ${builddir}/logs/coveragexml ${testdir}" />
+            <exec command="${toolsdir}/phpunit --bootstrap ${testdir}/bootstrap.php --coverage-html ${builddir}/bin/coverage --coverage-xml ${builddir}/logs/coveragexml ${testdir}"
+                  passthru="true"
+            />
         </target>';
     }
 }

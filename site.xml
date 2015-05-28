@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+
+    <types>
+
+        <!-- quiqqer-ci project list -->
+        <type type="types/list" icon="icon-list">
+            <locale group="quiqqer/quiqqer-ci" var="admin.types.list" />
+            <desc>
+                <locale group="quiqqer/quiqqer-ci" var="admin.types.list.desc" />
+            </desc>
+        </type>
+    </types>
+
+</site>
