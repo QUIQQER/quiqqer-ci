@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<crons>
+
+    <cron exec="\QUI\Ci\Cron::runBuild">
+        <title>Run builds</title>
+        <description>Run builds for a quiqqer-ci project</description>
+
+        <!-- available params -->
+        <params>
+            <param name="ci-project">
+                <locale group="" value="" />
+            </param>
+        </params>
+    </cron>
+
+    <cron exec="\QUI\Ci\Cron::runAll">
+        <title>Run all builds</title>
+        <description>Run builds for all quiqqer-ci projects</description>
+    </cron>
+
+</crons>
