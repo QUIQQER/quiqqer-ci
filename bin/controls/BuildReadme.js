@@ -12,8 +12,8 @@ define('package/quiqqer/quiqqer-ci/bin/controls/BuildReadme', [
 
     'qui/QUI',
     'qui/controls/Control',
-    'packages/bin/highlightjs/highlightjs-built',
-    'css!packages/bin/highlightjs/styles/default.css'
+    URL_OPT_DIR +'bin/highlightjs/highlightjs-built',
+    'css!'+ URL_OPT_DIR +'packages/bin/highlightjs/styles/default.css'
 
 ], function(QUI, QUIControl)
 {
