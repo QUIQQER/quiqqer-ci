@@ -21,7 +21,7 @@
 
 <section>
     {foreach $ciProjectlist as $CIProject}
-    <div>
+    <div class="quiqqerci-project">
         <header>
             <h2>{$CIProject->getName()}</h2>
             <div class="content-short">
@@ -30,7 +30,7 @@
 
         </header>
 
-        <div class="quiqqerci-project">
+        <div class="quiqqerci-project-data">
             {assign var=builds value=$CIProject->getBuilds()}
             {assign var=readme value=$CIProject->getReadme()}
 

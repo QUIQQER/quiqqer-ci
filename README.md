@@ -72,5 +72,19 @@ License
 -------
 
 
-Entwickler
+QUIQQER-CI verwenden
 --------
+
+### Projekt anlegen
+
+```
+sudo -u www-data php quiqqer.php --username= --password= --tool=quiqqer:quiqqer-ci --add=git@***.git
+```
+
+### Test für Projekt verfügbar machen
+
+Zum Beispiel: phpdox
+
+```
+sudo -u www-data php quiqqer.php --username= --password= --tool=quiqqer:quiqqer-ci-project --ci-project=0 --enable=phpdox
+```
