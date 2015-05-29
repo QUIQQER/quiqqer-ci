@@ -36,6 +36,7 @@
 .quiqqerci-build-icon {
     float: left;
     font-size: 50px !important;
+    line-height: 60px !important;
     margin-right: 10px;
     text-align: center;
     width: 50px;
