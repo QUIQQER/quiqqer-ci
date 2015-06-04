@@ -51,13 +51,21 @@ define('package/quiqqer/quiqqerci/bin/controls/admin/Coordinator', [
          */
         refresh : function()
         {
+            if (!this.$Grid) {
+                return;
+            }
+
             var self = this;
 
             this.Loader.show();
 
             Ajax.get('package_quiqqer_quiqqerci_ajax_list', function(result)
             {
-                console.log( result );
+                self.$Grid.setData({
+                    data : result
+                });
+
+                self.Loader.hide();
             }, {
                 'package' : 'quiqqer/quiqqerci'
             });
@@ -68,6 +76,8 @@ define('package/quiqqer/quiqqerci/bin/controls/admin/Coordinator', [
          */
         $onCreate : function()
         {
+            var self = this;
+
             // Buttons
             this.addButton({
                 text : 'Projekt hinzufügen',
@@ -95,8 +105,24 @@ define('package/quiqqer/quiqqerci/bin/controls/admin/Coordinator', [
 
             this.$Grid = new Grid(Container, {
                 columnModel : [{
+                    header    : 'Name',
+                    dataIndex : 'name',
+                    dataType  : 'string',
+                    width     : 200
+                }, {
+                    header    : 'Beschreibung',
+                    dataIndex : 'description',
+                    dataType  : 'string',
+                    width     : 500
+                }]
+            });
 
-               }]
+            this.$Grid.addEvents({
+                onDblClick : function() {
+                    self.editProject(
+                        self.$Grid.getSelectedData()[0].folder
+                    );
+                }
             });
 
             this.refresh();
@@ -124,9 +150,76 @@ define('package/quiqqer/quiqqerci/bin/controls/admin/Coordinator', [
             this.$Grid.setWidth( size.x - 40 );
         },
 
+        /**
+         *
+         */
         addProject : function()
         {
 
+        },
+
+        /**
+         * Edit a ci project
+         * Opens the edit window
+         *
+         * @param {String} folderName - Folder of the project
+         */
+        editProject : function(folderName)
+        {
+            if (folderName === '') {
+                return;
+            }
+
+            new QUIConfirm({
+                title : 'Projekt bearbeiten',
+                maxWidth : 800,
+                maxHeight : 600,
+                events :
+                {
+                    onOpen : function(Win)
+                    {
+                        Win.Loader.show();
+
+                        Ajax.get([
+                            'package_quiqqer_quiqqerci_ajax_get',
+                            'package_quiqqer_quiqqerci_ajax_projectEditTemplate'
+                        ], function(data, tpl)
+                        {
+                            var i, len, Setting, BuildCheckbox;
+
+                            var builds = data.settings.builds,
+                                settings = data.settings.settings,
+                                Content = Win.getContent();
+
+                            Content.set('html', tpl);
+
+                            for (i = 0, len = builds.length; i < len; i++)
+                            {
+                                BuildCheckbox = Content.getElement(
+                                    '.builds-container [name="'+ builds[i] +'"]'
+                                );
+
+                                if ( BuildCheckbox ) {
+                                    BuildCheckbox.checked = true;
+                                }
+                            }
+
+                            for (i in settings)
+                            {
+                                Content.getElements(
+                                    '.settings [name="'+ i +'"]'
+                                ).set('value', settings[i]);
+                            }
+
+
+                            Win.Loader.hide();
+                        }, {
+                            'package' : 'quiqqer/quiqqerci',
+                            folder : folderName
+                        });
+                    }
+                }
+            }).open();
         }
     });
 });

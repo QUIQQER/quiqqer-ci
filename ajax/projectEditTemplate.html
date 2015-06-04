@@ -1,0 +1,57 @@
+<form>
+
+    <table class="data-table settings">
+        <thead>
+            <tr>
+                <th colspan="2">
+                    Projekt Einstellungen
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="{cycle values="odd,even"}">
+                <td class="grid-40">Branch</td>
+                <td class="grid-60"><input type="text" value="" name="branch" /></td>
+            </tr>
+            <tr class="{cycle values="odd,even"}">
+                <td class="grid-40">Pfade in dem die PHPUnit Tests liegen</td>
+                <td class="grid-60"><input type="text" value="" name="phpunitPath" /></td>
+            </tr>
+            <tr>
+                <td class="description">
+                    Der PHPUnit Pfad ist ausgehend vom Projektpfad.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="data-table builds">
+        <thead>
+        <tr>
+            <th colspan="1">
+                Projekt Builds
+                <div class="description">
+                    Builds welche für das Projekt ausgeführt werden sollen
+                </div>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr class="{cycle values="odd,even" reset=true}">
+                <td>
+                    <div class="grid-100 builds-container">
+                        {foreach $builds as $Build}
+                        <div class="grid-25">
+                            <label title="{$Build->getDescription()|escape:"html"}">
+                            <input type="checkbox" name="{$Build->getName()}" />
+                            {$Build->getName()}
+                            </label>
+                        </div>
+                        {/foreach}
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</form>

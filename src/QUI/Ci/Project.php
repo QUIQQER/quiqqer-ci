@@ -51,11 +51,15 @@ class Project extends QUI\QDOM
      */
     public function __construct($name)
     {
+        if (empty($name)) {
+            throw new QUI\Exception('Project doesn\'t exist', 404);
+        }
+
         $this->_path = Coordinator::getCiPath().$name.'/';
         $this->_settingFile = $this->_path.'settings.xml';
 
         if (!is_dir($this->_path)) {
-            throw new QUI\Exception('Project doesn exist', 404);
+            throw new QUI\Exception('Project doesn\'t exist', 404);
         }
 
         if (!file_exists($this->_settingFile)) {
@@ -67,7 +71,7 @@ class Project extends QUI\QDOM
         $Settings = QUI\Utils\XML::getDomFromXml($this->_settingFile);
 
         $this->_builds = $this->_getBuildsBySettings($Settings);
-        $this->_settings = $this->_getBuildsBySettings($Settings);
+        $this->_settings = $this->_getSettingsBySettings($Settings);
 
         if (file_exists($this->getPath().'project/composer.json')) {
             $composerJson = json_decode(

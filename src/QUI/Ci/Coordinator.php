@@ -90,7 +90,17 @@ class Coordinator
      */
     public function getProjectlist()
     {
-        return QUI\Utils\System\File::readDir(self::getCiPath());
+        $path = self::getCiPath();
+        $files = QUI\Utils\System\File::readDir($path);
+        $result = array();
+
+        foreach ($files as $entry) {
+            if (is_dir($path.$entry)) {
+                $result[] = $entry;
+            }
+        }
+
+        return $result;
     }
 
     /**
