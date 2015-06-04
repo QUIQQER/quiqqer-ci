@@ -19,15 +19,16 @@
     
     "require": {
         "php": ">=5.4.0",
-        "phploc/phploc": "@stable",
-        "pdepend/pdepend": "@stable",
+        "phploc/phploc": "~2",
+        "pdepend/pdepend": "~2",
         "phpmd/phpmd": "2.2.*",
-        "phpunit/phpunit": "@stable",
-        "sebastian/phpcpd": "@stable",
+        "phpunit/phpunit": "~4",
+        "phpunit/php-code-coverage": "~2.0",
+        "sebastian/phpcpd": "~2",
         "theseer/phpdox": "@stable",
         "phpdocumentor/phpdocumentor": "dev-master",
         "phing/phing": "2.*",
-        "squizlabs/php_codesniffer": "@stable",
+        "squizlabs/php_codesniffer": "~2",
         "components/highlightjs": "dev-master"
     },
 
