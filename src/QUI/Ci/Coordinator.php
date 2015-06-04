@@ -5,7 +5,6 @@
  */
 namespace QUI\Ci;
 
-use PDepend\Util\Log;
 use QUI;
 
 /**
@@ -45,6 +44,7 @@ class Coordinator
                 continue;
             }
 
+            /* @var $Build \QUI\Ci\Build */
             $Build = new $build();
 
             $list[$Build->getAttribute('name')] = $Build;

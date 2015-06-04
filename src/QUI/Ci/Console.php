@@ -25,11 +25,10 @@ class Console extends QUI\System\Console\Tool
      */
     public function __construct()
     {
-        $this->setName('quiqqer:quiqqer-ci')
+        $this->setName('quiqqer:quiqqerci')
              ->setDescription('QUIQQER-CI Console')
              ->addArgument('list', 'List all project', false, true)
-             ->addArgument('add', 'Add a new project [--add=git@]', false, true)
-             ->addArgument('ci-project', 'Set or list project settings', false, true);
+             ->addArgument('add', 'Add a new project [--add=git@]', false, true);
 
         $this->_Coordinator = new Coordinator();
     }
@@ -50,34 +49,6 @@ class Console extends QUI\System\Console\Tool
             $this->writeLn('Project successfull added: '. $name, 'green');
             $this->writeLn();
             return;
-        }
-
-        if ($this->getArgument('ci-project')) {
-
-            $project = $this->getArgument('ci-project');
-            $list = $this->_Coordinator->getProjectlist();
-
-            if (is_numeric($project)) {
-                if (isset($list[$project])) {
-                    $project = $list[$project];
-                } else {
-                    throw new QUI\Exception('Project not found');
-                }
-            }
-
-            $Project = new Project($project);
-
-            if ($this->getArgument('enable')) {
-                $Project->enableSetting($this->getArgument('enable'));
-            }
-
-            if ($this->getArgument('disable')) {
-                $Project->disableSetting($this->getArgument('disable'));
-            }
-
-            if ($this->getArgument('list')) {
-                $Project->enableSetting($this->getArgument('list'));
-            }
         }
     }
 

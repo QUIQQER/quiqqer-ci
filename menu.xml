@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu>
+    <item parent="/extras/"
+          name="quiqqerci"
+          require="package/quiqqer/quiqqerci/bin/controls/admin/Coordinator"
+          icon="fa fa-connectdevelop"
+    >
+        QUIQQER-CI Verwaltung
+    </item>
+</menu>

@@ -27,16 +27,21 @@ class Project extends QUI\System\Console\Tool
      */
     public function __construct()
     {
-        $this->setName('quiqqer:quiqqer-ci-project')
+        $this->setName('quiqqer:quiqqerci-project')
              ->setDescription('QUIQQER-CI Project Console. Enable or disable project settings')
              ->addArgument('ci-project', 'Name or number of the project', 'cip')
-             ->addArgument('disable',
-                 'Disable build. --disable=[Name of the build]', false, true)
-             ->addArgument('enable',
-                 'Enable build. --enable=[Name of the build]', false, true)
+             ->addArgument('disableBuild',
+                 'Disable build. --disableBuild=[Name of the build]',
+                 false,
+                 true
+             )
+             ->addArgument('enableBuild',
+                 'Enable build. --enableBuild=[Name of the build]', false, true)
              ->addArgument('list-build',
                  'List all available build scripts and the builds for the project',
-                 false, true)
+                 false,
+                 true
+             )
              ->addArgument('run', 'Run the build', false, true);
 
         $this->_Coordinator = new QUI\Ci\Coordinator();
@@ -61,18 +66,18 @@ class Project extends QUI\System\Console\Tool
         $Project = new QUI\Ci\Project($project);
 
 
-        if ($this->getArgument('enable')) {
+        if ($this->getArgument('enableBuild')) {
 
-            $Project->enableSetting($this->getArgument('enable'));
+            $Project->enableBuild($this->getArgument('enableBuild'));
             $this->writeLn();
 
             return;
         }
 
 
-        if ($this->getArgument('disable')) {
+        if ($this->getArgument('disableBuild')) {
 
-            $Project->disableSetting($this->getArgument('disable'));
+            $Project->disableBuild($this->getArgument('disableBuild'));
             $this->writeLn();
 
             return;
@@ -85,6 +90,7 @@ class Project extends QUI\System\Console\Tool
 
             $builds = $this->_Coordinator->getAvailableBuilds();
             $settings = $Project->getSettings();
+            $buildSettings = $settings['builds'];
 
             $checkmark = "\342\234\223";
             $xmark = "\342\234\227";
@@ -92,7 +98,7 @@ class Project extends QUI\System\Console\Tool
             /* @var $Build \QUi\Ci\Build */
             foreach ($builds as $build => $Build) {
 
-                if (in_array($build, $settings)) {
+                if (in_array($build, $buildSettings)) {
                     $char = $checkmark;
                 } else {
                     $char = $xmark;
@@ -139,7 +145,8 @@ class Project extends QUI\System\Console\Tool
         $composerJson = array();
 
         $depends = array();
-        $projectBuilds = $Project->getSettings();
+        $settings = $Project->getSettings();
+        $projectBuilds = $settings['builds'];
         $availableBuilds = $this->_Coordinator->getAvailableBuilds();
 
         //

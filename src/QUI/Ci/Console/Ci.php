@@ -26,7 +26,7 @@ class Ci extends QUI\System\Console\Tool
      */
     public function __construct()
     {
-        $this->setName('quiqqer:quiqqer-ci')
+        $this->setName('quiqqer:quiqqerci')
              ->setDescription('QUIQQER-CI Console')
              ->addArgument('list', 'List all project', false, true)
              ->addArgument('add', 'Add a new project [--add=git@]', false, true);

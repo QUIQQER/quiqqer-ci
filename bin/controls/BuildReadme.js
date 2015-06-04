@@ -3,12 +3,18 @@
  * Build-Redame Control
  *
  * Shows the readme and highlight it
+ * This control is to display the readme.md from a ci-project
  *
  * @author www.pcsg.de (Henning Leutz)
- * @module package/quiqqer/quiqqer-ci/bin/controls/BuildReadme
+ * @module package/quiqqer/quiqqerci/bin/controls/BuildReadme
+ *
+ * @require qui/QUI
+ * @require qui/controls/Control
+ * @require package/bin/highlightjs/highlightjs-built
+ * @require css!package/bin/highlightjs/styles/default.css
  */
 
-define('package/quiqqer/quiqqer-ci/bin/controls/BuildReadme', [
+define('package/quiqqer/quiqqerci/bin/controls/BuildReadme', [
 
     'qui/QUI',
     'qui/controls/Control',
@@ -22,7 +28,7 @@ define('package/quiqqer/quiqqer-ci/bin/controls/BuildReadme', [
     return new Class({
 
         Extends : QUIControl,
-        Type : 'package/quiqqer/quiqqer-ci/bin/controls/BuildReadme',
+        Type : 'package/quiqqer/quiqqerci/bin/controls/BuildReadme',
 
         Binds : [
             '$onImport'

@@ -15,9 +15,18 @@ use QUI;
 class Project extends QUI\QDOM
 {
     /**
+     * Internal build settings
+     *
      * @var Array
      */
     protected $_builds = array();
+
+    /**
+     * Internal settings
+     *
+     * @var Array
+     */
+    protected $_settings;
 
     /**
      * File for the xml settings
@@ -25,11 +34,6 @@ class Project extends QUI\QDOM
      * @var string
      */
     protected $_settingFile;
-
-    /**
-     * @var \DOMDocument
-     */
-    protected $_Settings;
 
     /**
      * Project path
@@ -58,9 +62,12 @@ class Project extends QUI\QDOM
             file_put_contents($this->_settingFile, '<quiqqer-ci></quiqqer-ci>');
         }
 
-        $this->_Settings = QUI\Utils\XML::getDomFromXml($this->_settingFile);
-        $this->_builds = $this->_getBuildsBySettings();
         $this->setAttribute('name', $name);
+
+        $Settings = QUI\Utils\XML::getDomFromXml($this->_settingFile);
+
+        $this->_builds = $this->_getBuildsBySettings($Settings);
+        $this->_settings = $this->_getBuildsBySettings($Settings);
 
         if (file_exists($this->getPath().'project/composer.json')) {
             $composerJson = json_decode(
@@ -153,8 +160,10 @@ class Project extends QUI\QDOM
                 continue;
             }
 
-            $builds[$build]->setProject($this);
+            $Build = $builds[$build];
 
+            /* @var $Build \QUI\Ci\Build */
+            $Build->setProject($this);
             $result[$build] = $builds[$build];
         }
 
@@ -166,18 +175,33 @@ class Project extends QUI\QDOM
      */
     public function save()
     {
-        $xml = '<quiqqer-ci>';
+        $QuiqqerCi = new \DOMElement('quiqqer-ci');
+        $Builds = new \DOMElement('builds');
+        $Settings = new \DOMElement('settings');
 
         foreach ($this->_builds as $build) {
-            $xml .= '<build>'.$build.'</build>';
+            $Builds->appendChild(
+                new \DOMElement('build', $build)
+            );
         }
 
-        $xml .= '</quiqqer-ci>';
+        $QuiqqerCi->appendChild($Builds);
+
+
+        foreach ($this->_settings as $setting => $value) {
+            $Setting = new \DOMElement('setting', $setting);
+            $Setting->setAttribute('name', $value);
+            $Settings->appendChild($Setting);
+        }
+
+        $QuiqqerCi->appendChild($Builds);
+
 
         $Dom = new \DOMDocument('1.0');
         $Dom->preserveWhiteSpace = false;
-        $Dom->loadXML($xml);
         $Dom->formatOutput = true;
+
+        $Dom->appendChild($QuiqqerCi);
 
         file_put_contents($this->_settingFile, $Dom->saveXML());
     }
@@ -191,7 +215,7 @@ class Project extends QUI\QDOM
      *
      * @throws QUI\Exception
      */
-    public function enableSetting($build)
+    public function enableBuild($build)
     {
         $available = Coordinator::getAvailableBuilds();
 
@@ -218,7 +242,7 @@ class Project extends QUI\QDOM
      *
      * @throws QUI\Exception
      */
-    public function disableSetting($build)
+    public function disableBuild($build)
     {
         $available = Coordinator::getAvailableBuilds();
 
@@ -248,17 +272,42 @@ class Project extends QUI\QDOM
      */
     public function getSettings()
     {
-        return $this->_builds;
+        return array(
+            'builds'   => $this->_builds,
+            'settings' => $this->_settings
+        );
     }
 
     /**
-     * Return the specified builds
+     * Parse the settings for the specified settings
+     *
+     * @param \DOMDocument $Settings
      *
      * @return array
      */
-    protected function _getBuildsBySettings()
+    protected function _getSettingsBySettings(\DOMDocument $Settings)
     {
-        $builds = $this->_Settings->getElementsByTagName('build');
+        $settings = $Settings->getElementsByTagName('setting');
+        $result = array();
+
+        /* @var $Setting \DOMElement */
+        foreach ($settings as $Setting) {
+            $result[$Setting->getAttribute('name')] = trim($Setting->nodeValue);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Parse the settings for the specified builds
+     *
+     * @param \DOMDocument $Settings
+     *
+     * @return array
+     */
+    protected function _getBuildsBySettings(\DOMDocument $Settings)
+    {
+        $builds = $Settings->getElementsByTagName('build');
         $result = array();
 
         foreach ($builds as $Build) {

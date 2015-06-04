@@ -7,7 +7,7 @@ Dokumentationsgenerierung und Continuous Integration für dein PHP Projekt.
 
 Packetname:
 
-    quiqqer/quiqqer-ci
+    quiqqer/quiqqerci
 
 
 Features
@@ -41,7 +41,7 @@ Installation via APT (Ubuntu/Debian):
 sudo apt-get install php5-xsl php5-xdebug graphviz php5-intl libpcre3-dev php-pear
 ```
 
-Der Paketname ist: quiqqer/quiqqer-ci
+Der Paketname ist: quiqqer/quiqqerci
 
 *Hinweis*
 Wenn Xdebug auf der CLI nicht verfügbar ist, dann muss dies via PECL werden. :-/
@@ -78,7 +78,7 @@ QUIQQER-CI verwenden
 ### Projekt anlegen
 
 ```
-sudo -u www-data php quiqqer.php --username= --password= --tool=quiqqer:quiqqer-ci --add=git@***.git
+sudo -u www-data php quiqqer.php --username= --password= --tool=quiqqer:quiqqerci --add=git@***.git
 ```
 
 ### Test für Projekt verfügbar machen
@@ -86,5 +86,5 @@ sudo -u www-data php quiqqer.php --username= --password= --tool=quiqqer:quiqqer-
 Zum Beispiel: phpdox
 
 ```
-sudo -u www-data php quiqqer.php --username= --password= --tool=quiqqer:quiqqer-ci-project --ci-project=0 --enable=phpdox
+sudo -u www-data php quiqqer.php --username= --password= --tool=quiqqer:quiqqerci-project --ci-project=0 --enable=phpdox
 ```
