@@ -76,11 +76,15 @@ class Coordinator
     }
 
     /**
-     * @param $project
+     * Delete a project
+     *
+     * @param string $project - path / name of the project
      */
-    public function removeProject($project)
+    public function deleteProject($project)
     {
+        $CiProject = new QUI\Ci\Project($project);
 
+        QUI::getTemp()->moveToTemp($CiProject->getPath());
     }
 
     /**

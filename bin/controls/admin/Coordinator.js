@@ -15,10 +15,11 @@ define('package/quiqqer/quiqqerci/bin/controls/admin/Coordinator', [
     'qui/QUI',
     'qui/controls/desktop/Panel',
     'qui/controls/windows/Confirm',
+    'qui/controls/windows/Prompt',
     'controls/grid/Grid',
     'Ajax'
 
-], function(QUI, QUIPanel, QUIConfirm, Grid, Ajax)
+], function(QUI, QUIPanel, QUIConfirm, QUIPrompt, Grid, Ajax)
 {
     "use strict";
 
@@ -47,7 +48,7 @@ define('package/quiqqer/quiqqerci/bin/controls/admin/Coordinator', [
         },
 
         /**
-         *
+         * Refresh the view / panel
          */
         refresh : function()
         {
@@ -81,19 +82,23 @@ define('package/quiqqer/quiqqerci/bin/controls/admin/Coordinator', [
             // Buttons
             this.addButton({
                 text : 'Projekt hinzufügen',
+                name : 'add',
                 events : {
                     onClick : function() {
-
+                        self.addProject();
                     }
                 }
             });
 
             this.addButton({
                 text : 'Projekt löschen',
+                name : 'delete',
                 disabled : true,
                 events : {
                     onClick : function() {
-
+                        self.deleteProject(
+                            self.$Grid.getSelectedData()[0].folder
+                        );
                     }
                 }
             });
@@ -122,6 +127,12 @@ define('package/quiqqer/quiqqerci/bin/controls/admin/Coordinator', [
                     self.editProject(
                         self.$Grid.getSelectedData()[0].folder
                     );
+                },
+
+                onClick : function() {
+                    if (self.$Grid.getSelectedData().length) {
+                        self.getButtons('delete').enable();
+                    }
                 }
             });
 
@@ -151,11 +162,53 @@ define('package/quiqqer/quiqqerci/bin/controls/admin/Coordinator', [
         },
 
         /**
-         *
+         * Add a new project - opens the add dialog
          */
         addProject : function()
         {
+            var self = this;
 
+            new QUIPrompt({
+                title : 'Projekt hinzufügen',
+                maxWidth : 600,
+                maxHeight : 300,
+                autoclose : false,
+                cancel_button : {
+                    text      : 'Abbrechen',
+                    textimage : 'icon-remove fa fa-remove'
+                },
+                ok_button : {
+                    text      : 'Hinzufügen',
+                    textimage : 'icon-ok fa fa-check'
+                },
+                information : 'Fügen Sie bitte die GIT URL Ihres Projektes ein.',
+                events :
+                {
+                    onSubmit: function (value, Win)
+                    {
+                        Win.Loader.show();
+
+                        Ajax.post('package_quiqqer_quiqqerci_ajax_add', function(folder)
+                        {
+                            Win.Loader.hide();
+
+                            if (!folder) {
+                                Win.getInput().focus();
+                                return;
+                            }
+
+                            Win.close();
+
+                            self.refresh();
+                            self.editProject(folder);
+
+                        }, {
+                            'package' : 'quiqqer/quiqqerci',
+                            projecturl : value
+                        });
+                    }
+                }
+            }).open();
         },
 
         /**
@@ -211,11 +264,13 @@ define('package/quiqqer/quiqqerci/bin/controls/admin/Coordinator', [
 
                             for (i in settings)
                             {
-                                Content.getElements(
-                                    '.settings [name="'+ i +'"]'
-                                ).set('value', settings[i]);
+                                if (settings.hasOwnProperty(i))
+                                {
+                                    Content.getElements(
+                                        '.settings [name="'+ i +'"]'
+                                    ).set('value', settings[i]);
+                                }
                             }
-
 
                             Win.Loader.hide();
                         }, {
@@ -247,7 +302,7 @@ define('package/quiqqer/quiqqerci/bin/controls/admin/Coordinator', [
                             settings[ list[i].get('name') ] = list[i].get('value');
                         }
 
-                        Ajax.get('package_quiqqer_quiqqerci_ajax_save', function()
+                        Ajax.post('package_quiqqer_quiqqerci_ajax_save', function()
                         {
                             Win.close();
                         }, {
@@ -258,6 +313,50 @@ define('package/quiqqer/quiqqerci/bin/controls/admin/Coordinator', [
                                 settings : settings
                             })
                         });
+                    }
+                }
+            }).open();
+        },
+
+        /**
+         * Delete a project
+         *
+         * @param {String} folder - Folder of the project
+         */
+        deleteProject : function(folder)
+        {
+            var self = this;
+
+            new QUIConfirm({
+                title: 'Projekt löschen',
+                maxWidth : 600,
+                maxHeight : 300,
+                text : 'Möchten Sie wirklich das Projekt '+ folder +' löschen?',
+                information : 'Alle Daten und Statistiken gehen somit verloren.',
+                cancel_button: {
+                    text: 'Abbrechen',
+                    textimage: 'icon-remove fa fa-remove'
+                },
+                ok_button: {
+                    text: 'Löschen',
+                    textimage: 'icon-ok fa fa-check'
+                },
+
+                events :
+                {
+                    onSubmit: function (Win)
+                    {
+                        Win.Loader.show();
+
+                        Ajax.post('package_quiqqer_quiqqerci_ajax_del',
+                            function ()
+                            {
+                                Win.close();
+                                self.refresh();
+                            }, {
+                                'package': 'quiqqer/quiqqerci',
+                                folder: folder
+                            });
                     }
                 }
             }).open();
