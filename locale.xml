@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<locales>
+
+    <groups name="quiqqer/quiqqerci" datatype="php,js">
+        <locale name="package.title">
+            <de><![CDATA[QUIQQER - Continuous Integration]]></de>
+            <en><![CDATA[QUIQQER - Continuous Integration]]></en>
+        </locale>
+    </groups>
+
+    <groups name="quiqqer/quiqqerci" datatype="js">
+
+    </groups>
+
+    <groups name="quiqqer/quiqqerci" datatype="php">
+
+    </groups>
+
+</locales>
