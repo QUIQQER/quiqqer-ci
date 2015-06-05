@@ -37,7 +37,10 @@ define('package/quiqqer/quiqqerci/bin/controls/admin/Coordinator', [
         {
             this.parent(options);
 
-            this.setAttribute('title', 'CI Projekt Verwaltung');
+            this.setAttributes({
+                title : 'CI Projekt Verwaltung',
+                icon  : 'icon-refresh fa fa-connectdevelop'
+            });
 
             this.$Grid = null;
 
