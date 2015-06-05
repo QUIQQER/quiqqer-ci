@@ -207,8 +207,11 @@ class Project extends QUI\System\Console\Tool
         $projectName = $Project->getName();
         $projectDesc = $composerJson['description'];
 
-        $projectSrcdir = $projectBasedir.'project/lib';
-        $projectTestdir = $projectBasedir.'project/phpunit';
+        $projectSrcdir
+            = $projectBasedir.'project/'.$Project->getSetting('srcPath');
+
+        $projectTestdir
+            = $projectBasedir.'project/'.$Project->getSetting('phpunitPath');
 
 
         $buildXml

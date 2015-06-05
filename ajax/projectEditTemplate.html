@@ -3,23 +3,42 @@
     <table class="data-table settings">
         <thead>
             <tr>
-                <th colspan="2">
+                <th colspan="3">
                     Projekt Einstellungen
                 </th>
             </tr>
         </thead>
         <tbody>
             <tr class="{cycle values="odd,even"}">
-                <td class="grid-40">Branch</td>
+                <td class="grid-20">Branch</td>
                 <td class="grid-60"><input type="text" value="" name="branch" /></td>
             </tr>
             <tr class="{cycle values="odd,even"}">
-                <td class="grid-40">Pfade in dem die PHPUnit Tests liegen</td>
-                <td class="grid-60"><input type="text" value="" name="phpunitPath" /></td>
+                <td class="grid-20">
+                    Source Ordner
+                </td>
+                <td class="grid-30">
+                    <input type="text" value="" name="srcPath" />
+                </td>
+                <td class="grid-50">
+                    <div class="description">
+                        Pfad in dem die Source Dateien liegen.<br />
+                        Der Source Pfad gibt den Ordner an, in dem die zu testenden Dateien liegen.
+                    </div>
+                </td>
             </tr>
-            <tr>
-                <td class="description">
-                    Der PHPUnit Pfad ist ausgehend vom Projektpfad.
+            <tr class="{cycle values="odd,even"}">
+                <td class="grid-20">
+                    PHPUnit Ordner
+                </td>
+                <td class="grid-30">
+                    <input type="text" value="" name="phpunitPath" />
+                </td>
+                <td class="grid-50">
+                    <div class="description">
+                        Pfad in dem die PHPUnit Tests liegen.<br />
+                        Der PHPUnit Pfad ist ausgehend vom Projektpfad und gibt an in welchem Ordner die Unit Tests liegen.
+                    </div>
                 </td>
             </tr>
         </tbody>

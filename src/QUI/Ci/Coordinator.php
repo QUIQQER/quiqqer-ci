@@ -78,6 +78,7 @@ class Coordinator
             throw new QUI\Exception('This URL is not supported');
         }
 
+        // default values
         $CiProject = new Project($newProjectName);
 
         $CiProject->enableBuild('lint');
@@ -85,7 +86,9 @@ class Coordinator
         $CiProject->enableBuild('phpdox');
 
         $CiProject->setSettings(array(
-            'branch' => 'master'
+            'branch'      => 'master',
+            'srcPath'     => 'src/',
+            'phpunitPath' => 'phpunit/'
         ));
 
         $CiProject->save();

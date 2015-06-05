@@ -301,9 +301,14 @@ class Project extends QUI\QDOM
             $listOfSettings['phpunitPath'] = '';
         }
 
+        if (!isset($listOfSettings['srcPath'])) {
+            $listOfSettings['srcPath'] = 'src/';
+        }
+
         $this->_settings = array(
             'branch'      => $listOfSettings['branch'],
-            'phpunitPath' => $listOfSettings['phpunitPath']
+            'phpunitPath' => $listOfSettings['phpunitPath'],
+            'srcPath'     => $listOfSettings['srcPath']
         );
     }
 
@@ -318,6 +323,22 @@ class Project extends QUI\QDOM
             'builds'   => $this->_builds,
             'settings' => $this->_settings
         );
+    }
+
+    /**
+     * Return the setting
+     *
+     * @param string $setting - name of the settings
+     *
+     * @return bool|string
+     */
+    public function getSetting($setting)
+    {
+        if (!isset($this->_settings[$setting])) {
+            return $this->_settings[$setting];
+        }
+
+        return false;
     }
 
     /**
