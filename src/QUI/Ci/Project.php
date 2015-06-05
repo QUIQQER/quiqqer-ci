@@ -179,31 +179,28 @@ class Project extends QUI\QDOM
      */
     public function save()
     {
-        $QuiqqerCi = new \DOMElement('quiqqer-ci');
-        $Builds = new \DOMElement('builds');
-        $Settings = new \DOMElement('settings');
-
-        foreach ($this->_builds as $build) {
-            $Builds->appendChild(
-                new \DOMElement('build', $build)
-            );
-        }
-
-        $QuiqqerCi->appendChild($Builds);
-
-
-        foreach ($this->_settings as $setting => $value) {
-            $Setting = new \DOMElement('setting', $setting);
-            $Setting->setAttribute('name', $value);
-            $Settings->appendChild($Setting);
-        }
-
-        $QuiqqerCi->appendChild($Builds);
-
-
         $Dom = new \DOMDocument('1.0');
         $Dom->preserveWhiteSpace = false;
         $Dom->formatOutput = true;
+
+        $QuiqqerCi = $Dom->createElement('quiqqer-ci');
+        $Builds = $Dom->createElement('builds');
+        $Settings = $Dom->createElement('settings');
+
+        foreach ($this->_builds as $build) {
+            $Builds->appendChild(
+                $Dom->createElement('build', $build)
+            );
+        }
+
+        foreach ($this->_settings as $setting => $value) {
+            $Setting = $Dom->createElement('setting', $value);
+            $Setting->setAttribute('name', $setting);
+            $Settings->appendChild($Setting);
+        }
+
+        $QuiqqerCi->appendChild($Settings);
+        $QuiqqerCi->appendChild($Builds);
 
         $Dom->appendChild($QuiqqerCi);
 
@@ -212,6 +209,7 @@ class Project extends QUI\QDOM
 
     /**
      * Enable a build for the project
+     * The changes are saved
      *
      * @param String $build - name of the build
      *
@@ -239,6 +237,7 @@ class Project extends QUI\QDOM
 
     /**
      * Disable a build for the project
+     * The changes are saved
      *
      * @param String $build - name of the build
      *
@@ -267,6 +266,45 @@ class Project extends QUI\QDOM
         $this->save();
 
         return true;
+    }
+
+    /**
+     * Set the builds to the project
+     *
+     * @param array $listOfBuilds
+     */
+    public function setBuilds($listOfBuilds = array())
+    {
+        $available = Coordinator::getAvailableBuilds();
+
+        $this->_builds = array();
+
+        foreach ($listOfBuilds as $build) {
+            if (isset($available[$build])) {
+                $this->_builds[] = $build;
+            }
+        }
+    }
+
+    /**
+     * Set the settings to the project
+     *
+     * @param array $listOfSettings
+     */
+    public function setSettings($listOfSettings = array())
+    {
+        if (!isset($listOfSettings['branch'])) {
+            $listOfSettings['branch'] = 'dev-master';
+        }
+
+        if (!isset($listOfSettings['phpunitPath'])) {
+            $listOfSettings['phpunitPath'] = '';
+        }
+
+        $this->_settings = array(
+            'branch'      => $listOfSettings['branch'],
+            'phpunitPath' => $listOfSettings['phpunitPath']
+        );
     }
 
     /**
