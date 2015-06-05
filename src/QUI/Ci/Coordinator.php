@@ -68,11 +68,29 @@ class Coordinator
      */
     public function addProject($projectUrl)
     {
+        $newProjectName = false;
+
         if (strpos($projectUrl, 'git@') === 0) {
-            return $this->_addGitProject($projectUrl);
+            $newProjectName = $this->_addGitProject($projectUrl);
         }
 
-        throw new QUI\Exception('This URL is not supported');
+        if (!$newProjectName) {
+            throw new QUI\Exception('This URL is not supported');
+        }
+
+        $CiProject = new Project($newProjectName);
+
+        $CiProject->enableBuild('lint');
+        $CiProject->enableBuild('phpunit');
+        $CiProject->enableBuild('phpdox');
+
+        $CiProject->setSettings(array(
+            'branch' => 'master'
+        ));
+
+        $CiProject->save();
+
+        return $newProjectName;
     }
 
     /**
