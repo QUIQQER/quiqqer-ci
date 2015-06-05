@@ -3,7 +3,7 @@
     <item parent="/extras/"
           name="quiqqerci"
           require="package/quiqqer/quiqqerci/bin/controls/admin/Coordinator"
-          icon="fa fa-connectdevelop"
+          icon="icon-refresh fa fa-connectdevelop"
     >
         QUIQQER-CI Verwaltung
     </item>
