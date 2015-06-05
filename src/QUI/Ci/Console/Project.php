@@ -137,6 +137,17 @@ class Project extends QUI\System\Console\Tool
         $this->write($Project->getName());
         $this->writeLn('=================================');
 
+        // branch
+        chdir($Project->getPath());
+
+        $wantedBranch = $Project->getSetting('branch');
+
+        $this->writeLn();
+        $this->writeLn('Switch to branch '. $wantedBranch, 'brown');
+        system('git fetch');
+        system('git checkout '. escapeshellarg($wantedBranch));
+
+
         $this->writeLn();
         $this->writeLn('Generate build.xml', 'brown');
         $this->resetColor();
