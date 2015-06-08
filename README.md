@@ -54,6 +54,13 @@ sudo ln -s /etc/php5/mods-available/xdebug.ini /etc/php5/apache2/conf.d/20-xdebu
 sudo ln -s /etc/php5/mods-available/xdebug.ini /etc/php5/cli/conf.d/20-xdebug.ini
 ```
 
+Aktualisierung
+------------
+
+Die Installation und die Aktualisierung sollten über die Konsole / Bash ausgeführt werden.
+Das Aktualisierung aller Abhängigkeiten kann seine Zeit dauern und bei den meisten Webserver werden somit Timeouts geworfen die das Akutlaiiseren abbrechen.
+
+
 Mitwirken
 ----------
 
@@ -72,7 +79,7 @@ License
 -------
 
 
-QUIQQER-CI verwenden
+QUIQQER-CI übr die Konsole verwenden
 --------
 
 ### Projekt anlegen
