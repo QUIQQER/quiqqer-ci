@@ -1,40 +1,37 @@
 {
-    "name" : "quiqqer/quiqqerci",
-    "type" : "quiqqer-system",
-    "description" : "QUIQQER Continuous Integration - Generated Docs for Modules and Packages",
-    "version" : "dev-dev",
-    "license" : "GPL-3.0+",
-
-    "authors" : [{
-        "name": "Henning Leutz",
-        "email": "leutz@pcsg.de",
-        "homepage": "http://www.pcsg.de",
-        "role": "Developer"
-    }],
-
-    "support" : {
+    "name": "quiqqer\/quiqqerci",
+    "type": "quiqqer-system",
+    "description": "QUIQQER Continuous Integration - Generated Docs for Modules and Packages",
+    "license": "GPL-3.0+",
+    "authors": [
+        {
+            "name": "Henning Leutz",
+            "email": "leutz@pcsg.de",
+            "homepage": "http:\/\/www.pcsg.de",
+            "role": "Developer"
+        }
+    ],
+    "support": {
         "email": "support@pcsg.de",
-        "url": "http://www.quiqqer.com"
+        "url": "http:\/\/www.quiqqer.com"
     },
-    
     "require": {
         "php": ">=5.4.0",
-        "phploc/phploc": "~2",
-        "pdepend/pdepend": "~2",
-        "phpmd/phpmd": "2.2.*",
-        "phpunit/phpunit": "~4",
-        "phpunit/php-code-coverage": "~2.0",
-        "sebastian/phpcpd": "~2",
-        "theseer/phpdox": "@stable",
-        "phpdocumentor/phpdocumentor": "dev-master",
-        "phing/phing": "2.*",
-        "squizlabs/php_codesniffer": "~2",
-        "components/highlightjs": "dev-master"
+        "phploc\/phploc": "~2",
+        "pdepend\/pdepend": "~2",
+        "phpmd\/phpmd": "2.2.*",
+        "phpunit\/phpunit": "~4",
+        "phpunit\/php-code-coverage": "~2.0",
+        "sebastian\/phpcpd": "~2",
+        "theseer\/phpdox": "@stable",
+        "phpdocumentor\/phpdocumentor": "dev-master",
+        "phing\/phing": "2.*",
+        "squizlabs\/php_codesniffer": "~2",
+        "components\/highlightjs": "dev-master"
     },
-
     "autoload": {
-        "psr-0" : {
-            "QUI" : "src/"
+        "psr-0": {
+            "QUI": "src\/"
         }
     }
 }
